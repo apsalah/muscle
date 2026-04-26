@@ -1,0 +1,2023 @@
+<!DOCTYPE html>
+<html lang="ko"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>강의록 근육 정리</title>
+<style>
+  body{
+    margin:0;
+    font-family: Arial, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+    background:#f7f7f7;
+    color:#222;
+  }
+  .wrap{
+    max-width:1400px;
+    margin:0 auto;
+    padding:14px;
+  }
+  .topbar{
+    top:0;
+    background:#f7f7f7;
+    padding:6px 0 12px;
+    z-index:10;
+  }
+  h1{
+    margin:0 0 10px;
+    font-size:24px;
+    font-weight:700;
+  }
+  .tabs{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+  .tab{
+    padding:8px 14px;
+    border:1px solid #cfcfcf;
+    background:#ffffff;
+    color:#222;
+    border-radius:18px;
+    cursor:pointer;
+    font-size:14px;
+  }
+  .tab.active{
+    background:#e9e9e9;
+  }
+  .toolbar{
+    margin-top:8px;
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+  .toolbar button, .edit-btn{
+    padding:6px 12px;
+    border:1px solid #ccc;
+    background:#eee;
+    cursor:pointer;
+    color:#222;
+  }
+  .content{
+    display:block;
+  }
+  .panel{
+    background:#fff;
+    border:1px solid #d8d8d8;
+    border-radius:10px;
+    overflow:hidden;
+  }
+  .panel-head{
+    padding:14px 16px 10px;
+    border-bottom:1px solid #ececec;
+  }
+  .panel-head h2{
+    margin:0;
+    font-size:20px;
+  }
+  .panel-head p{
+    margin:6px 0 0;
+    font-size:12px;
+    color:#666;
+  }
+  .sec{ display:none; }
+  .sec.active{ display:block; }
+
+  .table-wrap{
+    padding:12px;
+  }
+  table{
+    width:100%;
+    border-collapse:collapse;
+    table-layout:fixed;
+  }
+  th, td{
+    border:1px solid #d8d8d8;
+    padding:10px 9px;
+    text-align:left;
+    vertical-align:top;
+    font-size:19.5px;
+    line-height:1.45;
+    word-break:break-word;
+    overflow-wrap:anywhere;
+    white-space:normal;
+    background:#fff;
+  }
+  th{
+    background:#f1f1f1;
+    font-weight:700;
+  }
+  td[contenteditable="true"]{
+    cursor:text;
+  }
+  td[contenteditable="true"]:focus, .memo-box[contenteditable="true"]:focus{
+    outline:2px solid #cfcfcf;
+    background:#fcfcfc;
+  }
+  .muscle-name{
+    position:relative;
+    font-weight:700;
+    cursor:pointer;
+  }
+  .name-label{
+    display:inline-block;
+  }
+  .name-popup{
+    position:fixed;
+    left:0;
+    top:0;
+    width:max-content;
+    max-width:92vw;
+    max-height:92vh;
+    background:#fff;
+    border:1px solid #d8d8d8;
+    border-radius:10px;
+    box-shadow:0 10px 24px rgba(0,0,0,0.14);
+    padding:12px;
+    z-index:9999;
+    display:none;
+    overflow:auto;
+  }
+  .name-popup.open{
+    display:block;
+  }
+  .name-popup img{
+    display:block;
+    width:auto;
+    height:auto;
+    max-width:calc(92vw - 24px);
+    max-height:calc(92vh - 72px);
+    object-fit:contain;
+    background:#fafafa;
+    border-radius:8px;
+  }
+  .name-popup-fallback{
+    min-height:220px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:18px;
+    background:#b5b5b5;
+    color:#fff;
+    font-size:24px;
+    font-weight:700;
+    line-height:1.35;
+    border-radius:8px;
+  }
+  .name-popup-path{
+    margin-top:8px;
+    font-size:12px;
+    color:#666;
+    line-height:1.4;
+  }
+  code{
+    background:#f1f1f1;
+    padding:2px 5px;
+    border-radius:6px;
+  }
+
+  @media (max-width:1000px){
+    .name-popup{
+      max-width:94vw;
+      max-height:94vh;
+    }
+    .name-popup img{
+      max-width:calc(94vw - 24px);
+      max-height:calc(94vh - 72px);
+    }
+  }
+</style>
+</head>
+<body style="font-family: &quot;Pretendard JP&quot;;">
+<div class="wrap">
+  <div class="topbar">
+    <h1>강의록 근육 정리</h1>
+    <div class="tabs">
+      <button class="tab" data-target="p">2. 앞가슴의 구조와 기능</button>
+      <button class="tab" data-target="s">3. 어깨의 구조와 기능</button>
+      <button class="tab" data-target="b">4. 등과 겨드랑의 구조와 기능</button>
+      <button class="tab" data-target="a">5. 위팔의 구조와 기능</button>
+      <button class="tab" data-target="f1">7. 아래팔의 구조와 기능-1</button>
+      <button class="tab" data-target="f2">7. 아래팔의 구조와 기능-2</button>
+
+      <button class="tab" data-target="h1">8. 손의 구조와 기능-1</button>
+      <button class="tab" data-target="h2">8. 손의 구조와 기능-2</button>
+      <button class="tab" data-target="h3">8. 손의 구조와 기능-3</button>
+
+      <button class="tab" data-target="t1">10. 넓적다리의 구조와 기능-1</button>
+      <button class="tab" data-target="t2">10. 넓적다리의 구조와 기능-2</button>
+      <button class="tab" data-target="t3">10. 넓적다리의 구조와 기능-3</button>
+      <button class="tab" data-target="g12">12. 볼기의 구조와 기능</button>
+      <button class="tab" data-target="l13_1">13. 종아리의 구조와 기능-1</button>
+      <button class="tab" data-target="l13_2">13. 종아리의 구조와 기능-2</button>
+      <button class="tab" data-target="ft15_1">15. 발의 구조와 기능-1</button>
+      <button class="tab" data-target="ft15_2">15. 발의 구조와 기능-2</button>
+      <button class="tab" data-target="ft15_3">15. 발의 구조와 기능-3</button>
+      <button class="tab" data-target="t16">16. 가슴벽의 구조와 기능</button>
+      <button class="tab" data-target="ab25">25. 배벽과 복강의 구조와 기능</button>
+      <button class="tab" data-target="pd26">26. 가로막과 뒤배벽의 구조와 기능</button>
+      <button class="tab" data-target="gi27">27. 소화관과 내장의 구조</button>
+      <button class="tab active" data-target="ab29">29. 복부장기의 구조와 기능</button>
+
+    </div>
+    <div class="toolbar">
+      <button id="saveFileBtn">저장</button>
+      <button id="saveAsFileBtn">다른 이름으로 저장</button>
+    </div>
+  </div>
+
+  <div class="content">
+    <div>
+      <section id="p" class="sec panel">
+        <div class="panel-head">
+          <h2>2. 앞가슴의 구조와 기능</h2>
+          <p></p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Muscle</th>
+                <th>Origin</th>
+                <th>Insertion</th>
+                <th>Nerve innervation</th>
+                <th>Blood supply artery</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="pectoralis_major.jpg" data-label="Pectoralis major m. (큰가슴근, 대흉근)" contenteditable="false" aria-expanded="false"><span class="name-label">Pectoralis major m. (큰가슴근, 대흉근)</span></td>
+                <td contenteditable="false">clavicle, sternum, upper abdomen</td>
+                <td contenteditable="false">lateral lip of intertubercular crest of the humerus</td>
+                <td contenteditable="false">lateral pectoral n./ medial pectoral n.</td>
+                <td contenteditable="false">thoracoacromial artery, lateral thoracic artery</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="pectoralis_minor.jpg" data-label="Pectoralis minor m. (작은가슴근, 소흉근)" contenteditable="false" aria-expanded="false"><span class="name-label">Pectoralis minor m. (작은가슴근, 소흉근)</span></td>
+                <td contenteditable="false">3-5th ribs</td>
+                <td contenteditable="false">coracoid process of scapula</td>
+                <td contenteditable="false">medial pectoral n.</td>
+                <td contenteditable="false">axillary a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="subclavius.jpg" data-label="Subclavius m. (빗장밑근)" contenteditable="false" aria-expanded="false"><span class="name-label">Subclavius m. (빗장밑근)</span></td>
+                <td contenteditable="false">1st rib and costal cartilage</td>
+                <td contenteditable="false">subclavian groove of clavicle</td>
+                <td contenteditable="false">subclavian n.</td>
+                <td contenteditable="false">subclavian a.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="padding:10px 12px;">
+          <div class="memo-box" contenteditable="false" style="border:1px solid #ccc; padding:8px; margin-bottom:8px; min-height:60px; background:#fafafa;">deltopectoral triangle : cephalic vein, deltoid branch of thoraco-acromial artery, clavipectoral fascia</div>
+          <button class="edit-btn" data-editing="false">편집</button>
+        </div>
+      </section>
+
+      <section id="s" class="sec panel">
+        <div class="panel-head">
+          <h2>3. 어깨의 구조와 기능</h2>
+          <p></p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Muscle</th>
+                <th>Origin</th>
+                <th>Insertion</th>
+                <th>Nerve innervation</th>
+                <th>Blood supply artery</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="deltoid.jpg" data-label="Deltoid muscle (어깨세모근, 삼각근)" contenteditable="false" aria-expanded="false"><span class="name-label">Deltoid muscle (어깨세모근, 삼각근)</span></td>
+                <td contenteditable="false">acrominal end of clavicle, acromion, scapular spine</td>
+                <td contenteditable="false">deltoid tuberosity of humerus</td>
+                <td contenteditable="false">axillary nerve (from posterior cord of C5, C6)</td>
+                <td contenteditable="false">anterior &amp; posterior circumflex humeral a., thoraco-acromial a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="supraspinatus.jpg" data-label="Supraspinatus (supraspinate, 가시위근)" contenteditable="false" aria-expanded="false"><span class="name-label">Supraspinatus (supraspinate, 가시위근)</span></td>
+                <td contenteditable="false">supraspinous fossa</td>
+                <td contenteditable="false">top of the greater tubercle</td>
+                <td contenteditable="false">suprascapular nerve (from C5)</td>
+                <td contenteditable="false">suprascapular a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="infraspinatus.jpg" data-label="Infraspinatus (infraspinate, 가시아래근)" contenteditable="false" aria-expanded="false"><span class="name-label">Infraspinatus (infraspinate, 가시아래근)</span></td>
+                <td contenteditable="false">infraspinous fossa</td>
+                <td contenteditable="false">mid-portion of the greater tubercle</td>
+                <td contenteditable="false">suprascapular nerve (from C5): pass suprascapular and greater scapular notch</td>
+                <td contenteditable="false">suprascapular a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="subscapularis.jpg" data-label="Subscapularis (어깨밑근)" contenteditable="false" aria-expanded="false"><span class="name-label">Subscapularis (어깨밑근)</span></td>
+                <td contenteditable="false">subscapular fossa</td>
+                <td contenteditable="false">lesser tubercle of the humerus</td>
+                <td contenteditable="false">subscapular nerve (from C5, C6)</td>
+                <td contenteditable="false">subscapular a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="teres_minor.jpg" data-label="Teres minor (작은원근)" contenteditable="false" aria-expanded="false"><span class="name-label">Teres minor (작은원근)</span></td>
+                <td contenteditable="false">lateral border of scapulae</td>
+                <td contenteditable="false">lower portion of the greater tubercle</td>
+                <td contenteditable="false">axillary nerve</td>
+                <td contenteditable="false">suprascapular a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="teres_major.jpg" data-label="Teres major (큰원근)" contenteditable="false" aria-expanded="false"><span class="name-label">Teres major (큰원근)</span></td>
+                <td contenteditable="false">inferior angle of scapulae</td>
+                <td contenteditable="false">medial lip of intertubercular crest of the humerus</td>
+                <td contenteditable="false">lower subscapular n.</td>
+                <td contenteditable="false">subscapular a.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="padding:10px 12px;">
+          <div class="memo-box" contenteditable="false" style="border:1px solid #ccc; padding:8px; margin-bottom:8px; min-height:60px; background:#fafafa;"><div>triangular space : subscapular nerve, circumflex scapular artery</div>quadrangular space : axillary nerve, posterial humeral circumflex artery</div>
+          <button class="edit-btn" data-editing="false">편집</button>
+        </div>
+      </section>
+
+      <section id="b" class="sec panel">
+        <div class="panel-head">
+          <h2>4. 등과 겨드랑의 구조와 기능</h2>
+          <p></p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Muscle</th>
+                <th>Origin</th>
+                <th>Insertion</th>
+                <th>Nerve innervation</th>
+                <th>Blood supply artery</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="trapezius.jpg" data-label="Trapezius m. (승모근, 등세모근)" contenteditable="false" aria-expanded="false"><span class="name-label">Trapezius m. (승모근, 등세모근)</span></td>
+                <td contenteditable="false">vertebral column/inion/superior nuchal line</td>
+                <td contenteditable="false">scapulae, clavicle</td>
+                <td contenteditable="false">accessory n. (cranial n. XI)</td>
+                <td contenteditable="false">transverse cervical artery</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="latissimus_dorsi.jpg" data-label="Latissimus dorsi m. (넓은등근,광배근)" contenteditable="false" aria-expanded="false"><span class="name-label">Latissimus dorsi m. (넓은등근,광배근)</span></td>
+                <td contenteditable="false">trunk</td>
+                <td contenteditable="false">intertubercular groove of the humerus</td>
+                <td contenteditable="false">thoracodorsal n. (C6-8)</td>
+                <td contenteditable="false">thoracodorsal artery</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="levator_scapulae.jpg" data-label="Levator scapulae m. (어깨올림근, 견갑거근)" contenteditable="false" aria-expanded="false"><span class="name-label">Levator scapulae m. (어깨올림근, 견갑거근)</span></td>
+                <td contenteditable="false">transverse process of C1-C4</td>
+                <td contenteditable="false">sup. angle of scapulae</td>
+                <td contenteditable="false">dorsal scapular n. (C5)</td>
+                <td contenteditable="false">dorsal scapular artery</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="rhomboid_minor.jpg" data-label="Rhomboid minor m. (작은마름근, 소능형근)" contenteditable="false" aria-expanded="false"><span class="name-label">Rhomboid minor m. (작은마름근, 소능형근)</span></td>
+                <td contenteditable="false">nuchal lig. &amp; spinous processes of C7-T1</td>
+                <td contenteditable="false">medial border of scapulae</td>
+                <td contenteditable="false">dorsal scapular n.</td>
+                <td contenteditable="false">dorsal scapular artery</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="rhomboid_major.jpg" data-label="Rhomboid major m. (큰마름근, 대능형근)" contenteditable="false" aria-expanded="false"><span class="name-label">Rhomboid major m. (큰마름근, 대능형근)</span></td>
+                <td contenteditable="false">T2-T5</td>
+                <td contenteditable="false">medial border of scapulae</td>
+                <td contenteditable="false">dorsal scapular n.</td>
+                <td contenteditable="false">dorsal scapular artery</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="serratus_anterior.jpg" data-label="Serratus anterior m. (어깨올림근, 앞톱니근)" contenteditable="false" aria-expanded="false"><span class="name-label">Serratus anterior m. (어깨올림근, 앞톱니근)</span></td>
+                <td contenteditable="false">1st-8th or 9th rib</td>
+                <td contenteditable="false">deep medial border of scapular</td>
+                <td contenteditable="false">long thoracic n. (C5-7)</td>
+                <td contenteditable="false">sup. thoracic a., lateral thoracic a.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="padding:10px 12px;">
+          <div class="memo-box" contenteditable="false" style="border:1px solid #ccc; padding:8px; margin-bottom:8px; min-height:60px; background:#fafafa;">메모</div>
+          <button class="edit-btn" data-editing="false">편집</button>
+        </div>
+      </section>
+
+      <section id="a" class="sec panel">
+        <div class="panel-head">
+          <h2>5. 위팔의 구조와 기능</h2>
+          <p></p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Muscle</th>
+                <th>Origin</th>
+                <th>Insertion</th>
+                <th>Nerve innervation</th>
+                <th>Blood supply artery</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="coracobrachialis.jpg" data-label="Coracobrachialis muscle (부리위팔근)" contenteditable="false" aria-expanded="false"><span class="name-label">Coracobrachialis muscle (부리위팔근)</span></td>
+                <td contenteditable="false">coracoid process of scapula</td>
+                <td contenteditable="false">medial border of the humerus</td>
+                <td contenteditable="false">musculocutaneous nerve (C5-7)</td>
+                <td contenteditable="false">brachial a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="biceps_brachii.jpg" data-label="Biceps brachii (위팔두갈래근)" contenteditable="false" aria-expanded="false"><span class="name-label">Biceps brachii (위팔두갈래근)</span></td>
+                <td contenteditable="false">short head: coracoid process / long head: supraglenoidal tubercle</td>
+                <td contenteditable="false">radial tuberosity, bicipital aponeuroses</td>
+                <td contenteditable="false">musculocutaneous nerve (C5-7)</td>
+                <td contenteditable="false">brachial a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="brachialis.jpg" data-label="Brachialis (위팔근)" contenteditable="false" aria-expanded="false"><span class="name-label">Brachialis (위팔근)</span></td>
+                <td contenteditable="false">humerus</td>
+                <td contenteditable="false">coronoid process and tuberosity of the ulna</td>
+                <td contenteditable="false">musculocutaneous nerve (C5-7)</td>
+                <td contenteditable="false">brachial a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="triceps_brachii.jpg" data-label="Triceps brachii (위팔세갈래근)" contenteditable="false" aria-expanded="false"><span class="name-label">Triceps brachii (위팔세갈래근)</span></td>
+                <td contenteditable="false">long: infraglenoid tubercle of scapula / lateral: postero-lateral surface of humerus / medial: postero-medial surface of humerus</td>
+                <td contenteditable="false">olecranon of the ulna</td>
+                <td contenteditable="false">radial n. and axillary n. (long head)</td>
+                <td contenteditable="false">deep brachial a., post. humeral circumflex a.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="padding:10px 12px;">
+          <div class="memo-box" contenteditable="false" style="border:1px solid #ccc; padding:8px; margin-bottom:8px; min-height:60px; background:#fafafa;">cubital fossa</div>
+          <button class="edit-btn" data-editing="false">편집</button>
+        </div>
+      </section>
+
+      <section id="f1" class="sec panel">
+        <div class="panel-head">
+          <h2>7. 아래팔의 구조와 기능-1</h2>
+          <p></p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Muscle</th>
+                <th>Origin</th>
+                <th>Insertion</th>
+                <th>Nerve innervation</th>
+                <th>Blood supply artery</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="pronator_teres.jpg" data-label="Pronator teres (원엎침근)" contenteditable="false" aria-expanded="false"><span class="name-label">Pronator teres (원엎침근)</span></td>
+                <td contenteditable="false">humeral head: medial supraepicondylar ridge / ulnar head: coronoid process</td>
+                <td contenteditable="false">middle of lateral surface of radial body</td>
+                <td contenteditable="false">median nerve</td>
+                <td contenteditable="false">radial &amp; ulnar a. (from brachial a.)</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="flexor_carpi_radialis.jpg" data-label="Flexor carpi radialis (FCR, 노쪽손목굽힘근)" contenteditable="false" aria-expanded="false"><span class="name-label">Flexor carpi radialis (FCR, 노쪽손목굽힘근)</span></td>
+                <td contenteditable="false">medial epicondyle of humerus</td>
+                <td contenteditable="false">base of 2nd and 3rd metacarpal bones</td>
+                <td contenteditable="false">median nerve</td>
+                <td contenteditable="false">radial a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="palmaris_longus.jpg" data-label="Palmaris longus (긴손바닥근)" contenteditable="false" aria-expanded="false"><span class="name-label">Palmaris longus (긴손바닥근)</span></td>
+                <td contenteditable="false">medial epicondyle of humerus</td>
+                <td contenteditable="false">palmar aponeurosis</td>
+                <td contenteditable="false">median n.</td>
+                <td contenteditable="false">-</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="flexor_carpi_ulnaris.jpg" data-label="Flexor carpi ulnaris (FCU, 자쪽손목굽힘근)" contenteditable="false" aria-expanded="false"><span class="name-label">Flexor carpi ulnaris (FCU, 자쪽손목굽힘근)</span></td>
+                <td contenteditable="false">humeral head: medial epicondyle of humerus / ulnar head: medial border of olecranon</td>
+                <td contenteditable="false">pisiform → hook of hamate, 5th metacarpal bone</td>
+                <td contenteditable="false">ulnar n.</td>
+                <td contenteditable="false">ulnar a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="flexor_digitorum_superficialis.jpg" data-label="Flexor digitorum superficialis (FDS, 얕은손가락굽힘근)" contenteditable="false" aria-expanded="false"><span class="name-label">Flexor digitorum superficialis (FDS, 얕은손가락굽힘근)</span></td>
+                <td contenteditable="false">humero-ulnar head: medial epicondyle of humerus, ulna / radial head: radius</td>
+                <td contenteditable="false">anterior margin on the base of the middle phalanges of the four fingers</td>
+                <td contenteditable="false">median n.</td>
+                <td contenteditable="false">ulnar a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="flexor_digitorum_profundus.jpg" data-label="Flexor digitorum profundus (FDP, 깊은손가락굽힘근)" contenteditable="false" aria-expanded="false"><span class="name-label">Flexor digitorum profundus (FDP, 깊은손가락굽힘근)</span></td>
+                <td contenteditable="false">antero-superior and medial surface of ulna, interosseous membrane</td>
+                <td contenteditable="false">base of the distal phalanges of four fingers</td>
+                <td contenteditable="false">median n. (2nd, 3rd finger), ulnar n. (4th, 5th finger)</td>
+                <td contenteditable="false">-</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="flexor_pollicis_longus.jpg" data-label="Flexor pollicis longus (FPL, 긴엄지굽힘근)" contenteditable="false" aria-expanded="false"><span class="name-label">Flexor pollicis longus (FPL, 긴엄지굽힘근)</span></td>
+                <td contenteditable="false">anterior surface of radius, interosseous membrane</td>
+                <td contenteditable="false">base of the distal phalange of the thumb</td>
+                <td contenteditable="false">median n.</td>
+                <td contenteditable="false">-</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="pronator_quadratus.jpg" data-label="Pronator quadratus (네모엎침근)" contenteditable="false" aria-expanded="false"><span class="name-label">Pronator quadratus (네모엎침근)</span></td>
+                <td contenteditable="false">medial, anterior surface of the ulna</td>
+                <td contenteditable="false">lateral, anterior surface of the radius</td>
+                <td contenteditable="false">median n.</td>
+                <td contenteditable="false">-</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="padding:10px 12px;">
+          <div class="memo-box" contenteditable="false" style="border:1px solid #ccc; padding:8px; margin-bottom:8px; min-height:60px; background:#fafafa;">메모</div>
+          <button class="edit-btn" data-editing="false">편집</button>
+        </div>
+      </section>
+
+      <section id="f2" class="sec panel">
+        <div class="panel-head">
+          <h2>7. 아래팔의 구조와 기능-2</h2>
+          <p></p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Muscle</th>
+                <th>Origin</th>
+                <th>Insertion</th>
+                <th>Nerve innervation</th>
+                <th>Blood supply artery</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="brachioradialis.jpg" data-label="Brachioradialis (위팔노근)" contenteditable="false" aria-expanded="false"><span class="name-label">Brachioradialis (위팔노근)</span></td>
+                <td contenteditable="false">lateral supracondylar ridge of the humerus</td>
+                <td contenteditable="false">radial styloid process</td>
+                <td contenteditable="false">superficial branch of radial n.</td>
+                <td contenteditable="false">-</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="extensor_carpi_radialis_longus.jpg" data-label="Extensor carpi radialis longus (ECRL, 긴노쪽손목폄근)" contenteditable="false" aria-expanded="false"><span class="name-label">Extensor carpi radialis longus (ECRL, 긴노쪽손목폄근)</span></td>
+                <td contenteditable="false">lateral supracondylar ridge of the humerus</td>
+                <td contenteditable="false">2nd metacarpal bone</td>
+                <td contenteditable="false">radial n. (superficial branch)</td>
+                <td contenteditable="false">-</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="extensor_carpi_radialis_brevis.jpg" data-label="Extensor carpi radialis brevis (ECRB, 짧은노쪽손목폄근)" contenteditable="false" aria-expanded="false"><span class="name-label">Extensor carpi radialis brevis (ECRB, 짧은노쪽손목폄근)</span></td>
+                <td contenteditable="false">lateral epicondyle</td>
+                <td contenteditable="false">3rd metacarpal bone</td>
+                <td contenteditable="false">radial n. (deep branch)</td>
+                <td contenteditable="false">-</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="extensor_digitorum.jpg" data-label="Extensor digitorum (손가락폄근)" contenteditable="false" aria-expanded="false"><span class="name-label">Extensor digitorum (손가락폄근)</span></td>
+                <td contenteditable="false">lateral epicondyle (common extensor tendon)</td>
+                <td contenteditable="false">extensor expansion (extension hood) → middle and distal phalanges of 4 fingers</td>
+                <td contenteditable="false">radial n. (posterior interosseous n.)</td>
+                <td contenteditable="false">-</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="extensor_digiti_minimi.jpg" data-label="Extensor digiti minimi (EDM, 새끼폄근)" contenteditable="false" aria-expanded="false"><span class="name-label">Extensor digiti minimi (EDM, 새끼폄근)</span></td>
+                <td contenteditable="false">lateral epicondyle (common extensor tendon)</td>
+                <td contenteditable="false">extensor expansion (extension hood) → distal phalanges of 5th finger</td>
+                <td contenteditable="false">radial n. (posterior interosseous n.)</td>
+                <td contenteditable="false">-</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="extensor_carpi_ulnaris.jpg" data-label="Extensor carpi ulnaris (ECU, 자쪽손목폄근)" contenteditable="false" aria-expanded="false"><span class="name-label">Extensor carpi ulnaris (ECU, 자쪽손목폄근)</span></td>
+                <td contenteditable="false">humeral head: lateral epicondyle (common extensor tendon) / ulnar head: olecranon, posterior surface of ulna</td>
+                <td contenteditable="false">5th metacarpal</td>
+                <td contenteditable="false">radial n. (posterior interosseous n.)</td>
+                <td contenteditable="false">-</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="supinator.jpg" data-label="Supinator (손뒤침근)" contenteditable="false" aria-expanded="false"><span class="name-label">Supinator (손뒤침근)</span></td>
+                <td contenteditable="false">lateral epicondyle, supinator crest of ulna, radial collateral lig., annular lig.</td>
+                <td contenteditable="false">lateral proximal radial shift</td>
+                <td contenteditable="false">radial n. (deep branch)</td>
+                <td contenteditable="false">-</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="abductor_pollicis_longus.jpg" data-label="Abductor pollicis longus (긴엄지벌림근)" contenteditable="false" aria-expanded="false"><span class="name-label">Abductor pollicis longus (긴엄지벌림근)</span></td>
+                <td contenteditable="false">posterior surface of ulna &amp; radius, interosseous membrane</td>
+                <td contenteditable="false">base of 1st metacarpal</td>
+                <td contenteditable="false">radial n. (posterior interosseous n.)</td>
+                <td contenteditable="false">posterior interosseous a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="extensor_pollicis_longus.jpg" data-label="Extensor pollicis longus (긴엄지폄근)" contenteditable="false" aria-expanded="false"><span class="name-label">Extensor pollicis longus (긴엄지폄근)</span></td>
+                <td contenteditable="false">posterior surface of ulna, interosseous membrane</td>
+                <td contenteditable="false">base of distal phalanx of thumb</td>
+                <td contenteditable="false">radial n. (posterior interosseous n.)</td>
+                <td contenteditable="false">posterior interosseous a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="extensor_indicis.jpg" data-label="Extensor indicis (집게폄근)" contenteditable="false" aria-expanded="false"><span class="name-label">Extensor indicis (집게폄근)</span></td>
+                <td contenteditable="false">posterior surface of ulna, interosseous membrane</td>
+                <td contenteditable="false">extensor expansion of index finger</td>
+                <td contenteditable="false">radial n. (posterior interosseous n.)</td>
+                <td contenteditable="false">posterior interosseous a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="extensor_pollicis_brevis.jpg" data-label="Extensor pollicis brevis (짧은엄지폄근)" contenteditable="false" aria-expanded="false"><span class="name-label">Extensor pollicis brevis (짧은엄지폄근)</span></td>
+                <td contenteditable="false">posterior surface of radius, interosseous membrane</td>
+                <td contenteditable="false">base of proximal phalanx of thumb</td>
+                <td contenteditable="false">radial n. (posterior interosseous n.)</td>
+                <td contenteditable="false">posterior interosseous a.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="padding:10px 12px;">
+          <div class="memo-box" contenteditable="false" style="border:1px solid #ccc; padding:8px; margin-bottom:8px; min-height:60px; background:#fafafa;">anatomical snuff box : extensor pollicis brevis, abductor pollicis longus, extensor pollicis longus, radial artery, cephalic vein, superficial branch of radial nerve</div>
+          <button class="edit-btn" data-editing="false">편집</button>
+        </div>
+      </section>
+
+
+      <section id="h1" class="sec panel">
+        <div class="panel-head">
+          <h2>8. 손의 구조와 기능-1</h2>
+          <p></p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Muscle</th>
+                <th>Origin</th>
+                <th>Insertion</th>
+                <th>Nerve innervation</th>
+                <th>Blood supply artery</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="abductor_pollicis_brevis.jpg" data-label="Abductor pollicis brevis (APB, 짧은엄지벌림근)" contenteditable="false" aria-expanded="false"><span class="name-label">Abductor pollicis brevis (APB, 짧은엄지벌림근)</span></td>
+                <td contenteditable="false">trapezium, scaphoid, flexor retinaculum</td>
+                <td contenteditable="false">lateral (radial) base of proximal phalange of thumb</td>
+                <td contenteditable="false">recurrent br. of median n.</td>
+                <td contenteditable="false">-</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="flexor_pollicis_brevis.jpg" data-label="Flexor pollicis brevis (FPB, 짧은엄지굽힘근)" contenteditable="false" aria-expanded="false"><span class="name-label">Flexor pollicis brevis (FPB, 짧은엄지굽힘근)</span></td>
+                <td contenteditable="false">trapezium (deep head), flexor retinaculum (superficial head)</td>
+                <td contenteditable="false">base of proximal phalange of thumb</td>
+                <td contenteditable="false">recurrent br. of median n. &amp; deep br. of ulnar n. (part of deep head)</td>
+                <td contenteditable="false">-</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="opponens_pollicis.jpg" data-label="Opponens pollicis (엄지맞섬근)" contenteditable="false" aria-expanded="false"><span class="name-label">Opponens pollicis (엄지맞섬근)</span></td>
+                <td contenteditable="false">trapezium, flexor retinaculum</td>
+                <td contenteditable="false">1st metacarpal bone of thumb</td>
+                <td contenteditable="false">recurrent br. of median n.</td>
+                <td contenteditable="false">-</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="adductor_pollicis.jpg" data-label="Adductor pollicis (엄지모음근)" contenteditable="false" aria-expanded="false"><span class="name-label">Adductor pollicis (엄지모음근)</span></td>
+                <td contenteditable="false">transverse head: 3rd metacarpal bone / oblique head: base of 3rd metacarpal bone, capitate</td>
+                <td contenteditable="false">base of proximal phalange of thumb</td>
+                <td contenteditable="false">deep br. of ulnar n.</td>
+                <td contenteditable="false">deep palmar arch (primarily radial a.)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="padding:10px 12px;">
+          <div class="memo-box" contenteditable="false" style="border:1px solid #ccc; padding:8px; margin-bottom:8px; min-height:60px; background:#fafafa;">Thenar muscles</div>
+          <button class="edit-btn" data-editing="false">편집</button>
+        </div>
+      </section>
+
+      <section id="h2" class="sec panel">
+        <div class="panel-head">
+          <h2>8. 손의 구조와 기능-2</h2>
+          <p></p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Muscle</th>
+                <th>Origin</th>
+                <th>Insertion</th>
+                <th>Nerve innervation</th>
+                <th>Blood supply artery</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="abductor_digiti_minimi.jpg" data-label="Abductor digiti minimi (새끼벌림근)" contenteditable="false" aria-expanded="false"><span class="name-label">Abductor digiti minimi (새끼벌림근)</span></td>
+                <td contenteditable="false">pisiform, flexor retinaculum</td>
+                <td contenteditable="false">base of proximal phalange of 5th digit</td>
+                <td contenteditable="false">deep br. of ulnar n.</td>
+                <td contenteditable="false">-</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="flexor_digiti_minimi_brevis.jpg" data-label="Flexor digiti minimi brevis (짧은새끼굽힘근)" contenteditable="false" aria-expanded="false"><span class="name-label">Flexor digiti minimi brevis (짧은새끼굽힘근)</span></td>
+                <td contenteditable="false">hook of hamate</td>
+                <td contenteditable="false">base of proximal phalange of 5th digit</td>
+                <td contenteditable="false">deep br. of ulnar n.</td>
+                <td contenteditable="false">-</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="opponens_digiti_minimi.jpg" data-label="Opponens digiti minimi (새끼맞섬근)" contenteditable="false" aria-expanded="false"><span class="name-label">Opponens digiti minimi (새끼맞섬근)</span></td>
+                <td contenteditable="false">hook of hamate, flexor retinaculum</td>
+                <td contenteditable="false">lateral border of 5th metacarpal</td>
+                <td contenteditable="false">deep br. of ulnar n.</td>
+                <td contenteditable="false">-</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="padding:10px 12px;">
+          <div class="memo-box" contenteditable="false" style="border:1px solid #ccc; padding:8px; margin-bottom:8px; min-height:60px; background:#fafafa;">Hypothenar muscles</div>
+          <button class="edit-btn" data-editing="false">편집</button>
+        </div>
+      </section>
+
+      <section id="h3" class="sec panel">
+        <div class="panel-head">
+          <h2>8. 손의 구조와 기능-3</h2>
+          <p></p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Muscle</th>
+                <th>Origin</th>
+                <th>Insertion</th>
+                <th>Nerve innervation</th>
+                <th>Blood supply artery</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="lumbricals.jpg" data-label="Lumbricals (벌레근)" contenteditable="false" aria-expanded="false"><span class="name-label">Lumbricals (벌레근)</span></td>
+                <td contenteditable="false">tendon of flexor digitorum profundus (FDP)</td>
+                <td contenteditable="false">extensor hood</td>
+                <td contenteditable="false">median n. (1, 2), ulnar n. (3, 4)</td>
+                <td contenteditable="false">-</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="dorsal_interossei.jpg" data-label="Dorsal interossei (등쪽뼈사이근)" contenteditable="false" aria-expanded="false"><span class="name-label">Dorsal interossei (등쪽뼈사이근)</span></td>
+                <td contenteditable="false">metacarpals</td>
+                <td contenteditable="false">proximal phalanges, extensor hood</td>
+                <td contenteditable="false">deep br. of ulnar n.</td>
+                <td contenteditable="false">-</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="palmar_interossei.jpg" data-label="Palmar interossei (바닥쪽뼈사이근)" contenteditable="false" aria-expanded="false"><span class="name-label">Palmar interossei (바닥쪽뼈사이근)</span></td>
+                <td contenteditable="false">middle side of metacarpals</td>
+                <td contenteditable="false">base of proximal phalanges, extensor hood</td>
+                <td contenteditable="false">deep br. of ulnar n.</td>
+                <td contenteditable="false">-</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="padding:10px 12px;">
+          <div class="memo-box" contenteditable="false" style="border:1px solid #ccc; padding:8px; margin-bottom:8px; min-height:60px; background:#fafafa;">Lumbricals and interossei</div>
+          <button class="edit-btn" data-editing="false">편집</button>
+        </div>
+      </section>
+
+
+
+      <section id="t1" class="sec panel">
+        <div class="panel-head">
+          <h2>10. 넓적다리의 구조와 기능-1</h2>
+          <p></p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Muscle</th>
+                <th>Origin</th>
+                <th>Insertion</th>
+                <th>Nerve innervation</th>
+                <th>Blood supply artery</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="tensor_fascia_latae.jpg" data-label="Tensor fascia latae" contenteditable="false" aria-expanded="false"><span class="name-label">Tensor fascia latae</span></td>
+                <td contenteditable="false">anterior superior iliac spine</td>
+                <td contenteditable="false">iliotibial tract</td>
+                <td contenteditable="false">superior gluteal n. (from sacral plexus)</td>
+                <td contenteditable="false">superior gluteal a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="sartorius.jpg" data-label="Sartorius" contenteditable="false" aria-expanded="false"><span class="name-label">Sartorius</span></td>
+                <td contenteditable="false">anterior superior iliac spine</td>
+                <td contenteditable="false">pes anserinus (medial tibia)</td>
+                <td contenteditable="false">femoral n. (L2-L4)</td>
+                <td contenteditable="false">femoral a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="rectus_femoris.jpg" data-label="Rectus femoris" contenteditable="false" aria-expanded="false"><span class="name-label">Rectus femoris</span></td>
+                <td contenteditable="false">short head: anterior inferior iliac spine / reflected head: groove on acetabulum</td>
+                <td contenteditable="false">base of patella tendon</td>
+                <td contenteditable="false">femoral n.</td>
+                <td contenteditable="false">lateral circumflex femoral a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="vastus_lateralis.jpg" data-label="Vastus lateralis" contenteditable="false" aria-expanded="false"><span class="name-label">Vastus lateralis</span></td>
+                <td contenteditable="false">lower border of greater trochanter, lateral lip of linea aspera</td>
+                <td contenteditable="false">lateral patella retinaculum, tibial tuberosity (through patellar lig.)</td>
+                <td contenteditable="false">femoral n.</td>
+                <td contenteditable="false">lateral circumflex femoral a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="vastus_medialis.jpg" data-label="Vastus medialis" contenteditable="false" aria-expanded="false"><span class="name-label">Vastus medialis</span></td>
+                <td contenteditable="false">inferior to intertrochanteric line, medial lip of linea aspera</td>
+                <td contenteditable="false">medial patella retinaculum</td>
+                <td contenteditable="false">femoral n.</td>
+                <td contenteditable="false">femoral a. / profunda femoris a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="vastus_intermedius.jpg" data-label="Vastus intermedius" contenteditable="false" aria-expanded="false"><span class="name-label">Vastus intermedius</span></td>
+                <td contenteditable="false">anterolateral femur</td>
+                <td contenteditable="false">deep layer of quadriceps tendon</td>
+                <td contenteditable="false">femoral n.</td>
+                <td contenteditable="false">lateral circumflex femoral a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="articularis_genus.jpg" data-label="Articularis genus" contenteditable="false" aria-expanded="false"><span class="name-label">Articularis genus</span></td>
+                <td contenteditable="false">anterior surface of femur</td>
+                <td contenteditable="false">suprapatella bursa (synovial membrane of knee joint)</td>
+                <td contenteditable="false">femoral n.</td>
+                <td contenteditable="false">femoral a.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="padding:10px 12px;">
+          <div class="memo-box" contenteditable="false" style="border:1px solid #ccc; padding:8px; margin-bottom:8px; min-height:60px; background:#fafafa;">femoral triangle : satorius, inguinal ligament, adductor longus, pectineus, iliopsoas, femoral n. a. v.<div>femoral sheath, femoral canal, femoral ring&nbsp; &nbsp; &nbsp;*femoral hernia</div></div>
+          <button class="edit-btn" data-editing="false">편집</button>
+        </div>
+      </section>
+
+      <section id="t2" class="sec panel">
+        <div class="panel-head">
+          <h2>10. 넓적다리의 구조와 기능-2</h2>
+          <p></p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Muscle</th>
+                <th>Origin</th>
+                <th>Insertion</th>
+                <th>Nerve innervation</th>
+                <th>Blood supply artery</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="pectineus.jpg" data-label="Pectineus" contenteditable="false" aria-expanded="false"><span class="name-label">Pectineus</span></td>
+                <td contenteditable="false">pectineal line of pubic bone</td>
+                <td contenteditable="false">pectineal line of medial lip</td>
+                <td contenteditable="false">femoral n. (sometims +obturator n.)</td>
+                <td contenteditable="false">obturator a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="adductor_longus.jpg" data-label="Adductor longus" contenteditable="false" aria-expanded="false"><span class="name-label">Adductor longus</span></td>
+                <td contenteditable="false">pubis</td>
+                <td contenteditable="false">linea aspera</td>
+                <td contenteditable="false">obturator n.</td>
+                <td contenteditable="false">obturator a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="adductor_brevis.jpg" data-label="Adductor brevis" contenteditable="false" aria-expanded="false"><span class="name-label">Adductor brevis</span></td>
+                <td contenteditable="false">pubis</td>
+                <td contenteditable="false">linea aspera (proximal)</td>
+                <td contenteditable="false">obturator n.</td>
+                <td contenteditable="false">obturator a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="adductor_magnus.jpg" data-label="Adductor magnus" contenteditable="false" aria-expanded="false"><span class="name-label">Adductor magnus</span></td>
+                <td contenteditable="false">inferior ramus of pubis / ischial tuberosity</td>
+                <td contenteditable="false">gluteal tuberosity, linea aspera / adductor tubercle</td>
+                <td contenteditable="false">obturator n. / sciatic n.</td>
+                <td contenteditable="false">deep femoral a. (profunda femoris a.)</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="gracilis.jpg" data-label="Gracilis" contenteditable="false" aria-expanded="false"><span class="name-label">Gracilis</span></td>
+                <td contenteditable="false">ischiopubic ramus</td>
+                <td contenteditable="false">pes anserinus</td>
+                <td contenteditable="false">obturator n.</td>
+                <td contenteditable="false">obturator a.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="padding:10px 12px;">
+          <div class="memo-box" contenteditable="false" style="border:1px solid #ccc; padding:8px; margin-bottom:8px; min-height:60px; background:#fafafa;">adductor canal : satorius, vastus medialis, adductor longus, femoral a. v., saphenous n.<div>adductor hiatus : femoral a. v.</div></div>
+          <button class="edit-btn" data-editing="false">편집</button>
+        </div>
+      </section>
+
+      <section id="t3" class="sec panel">
+        <div class="panel-head">
+          <h2>10. 넓적다리의 구조와 기능-3</h2>
+          <p></p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Muscle</th>
+                <th>Origin</th>
+                <th>Insertion</th>
+                <th>Nerve innervation</th>
+                <th>Blood supply artery</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="biceps_femoris.jpg" data-label="Biceps femoris" contenteditable="false" aria-expanded="false"><span class="name-label">Biceps femoris</span></td>
+                <td contenteditable="false">long head: ischial tuberosity / short head: linea aspera</td>
+                <td contenteditable="false">head of fibula</td>
+                <td contenteditable="false">long head: sciatic n. (tibial division) / short head: sciatic n. (common fibular division)</td>
+                <td contenteditable="false">profunda femoris a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="semitendinosus.jpg" data-label="Semitendinosus" contenteditable="false" aria-expanded="false"><span class="name-label">Semitendinosus</span></td>
+                <td contenteditable="false">ischial tuberosity</td>
+                <td contenteditable="false">pes anserinu</td>
+                <td contenteditable="false">sciatic n. (tibial division)</td>
+                <td contenteditable="false">profunda femoris a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="semimembranosus.jpg" data-label="Semimembranosus" contenteditable="false" aria-expanded="false"><span class="name-label">Semimembranosus</span></td>
+                <td contenteditable="false">ischial tuberosity</td>
+                <td contenteditable="false">medial condyle of tibia</td>
+                <td contenteditable="false">sciatic n. (tibial division)</td>
+                <td contenteditable="false">profunda femoris a.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="padding:10px 12px;">
+          <div class="memo-box" contenteditable="false" style="border:1px solid #ccc; padding:8px; margin-bottom:8px; min-height:60px; background:#fafafa;">popliteal fossa : bieceps femoris, semitendinosus, semimembranosus, gastrocnemius, pantaris, tibial n., common peroneal n., popliteal a. v.</div>
+          <button class="edit-btn" data-editing="false">편집</button>
+        </div>
+      </section>
+
+      <section id="g12" class="sec panel">
+        <div class="panel-head">
+          <h2>12. 볼기의 구조와 기능</h2>
+          <p></p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Muscle</th>
+                <th>Origin</th>
+                <th>Insertion</th>
+                <th>Nerve innervation</th>
+                <th>Blood supply artery</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="gluteus_maximus.jpg" data-label="Gluteus maximus (큰볼기근)" contenteditable="false" aria-expanded="false"><span class="name-label">Gluteus maximus (큰볼기근)</span></td>
+                <td contenteditable="false">Deep distal ¼: superior posterior area of posterior gluteal line of ilium / Superficial ¾: dorsal surface of sacrum and coccyx, sacrotuberous lig.</td>
+                <td contenteditable="false">Deep distal ¼: gluteal tuberosity of femur / Superficial ¾: iliotibial tract</td>
+                <td contenteditable="false">inferior gluteal n. (L5, S1-2)</td>
+                <td contenteditable="false">superior gluteal a. / inferior gluteal a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="gluteus_medius.jpg" data-label="Gluteus medius (중간볼기근)" contenteditable="false" aria-expanded="false"><span class="name-label">Gluteus medius (중간볼기근)</span></td>
+                <td contenteditable="false">area between post. and ant. gluteal line</td>
+                <td contenteditable="false">lateral surface of greater trochanter</td>
+                <td contenteditable="false">superior gluteal n.</td>
+                <td contenteditable="false">superior gluteal a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="gluteus_minimus.jpg" data-label="Gluteus minimus (작은볼기근)" contenteditable="false" aria-expanded="false"><span class="name-label">Gluteus minimus (작은볼기근)</span></td>
+                <td contenteditable="false">area between ant. and inf. gluteal line</td>
+                <td contenteditable="false">anterior surface of greater trochanter</td>
+                <td contenteditable="false">superior gluteal n.</td>
+                <td contenteditable="false">superior gluteal a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="piriformis.jpg" data-label="Piriformis (궁둥구멍근)" contenteditable="false" aria-expanded="false"><span class="name-label">Piriformis (궁둥구멍근)</span></td>
+                <td contenteditable="false">lateral surface of sacrum (through greater sciatic foramen)</td>
+                <td contenteditable="false">greater trochanter</td>
+                <td contenteditable="false">nerve to piriformis (S1, S2)</td>
+                <td contenteditable="false">superior gluteal a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="obturator_internus.jpg" data-label="Obturator internus (속폐쇄근)" contenteditable="false" aria-expanded="false"><span class="name-label">Obturator internus (속폐쇄근)</span></td>
+                <td contenteditable="false">ischiopubic ramus, pelvic surface of obturator membrane (through lesser sciatic foramen)</td>
+                <td contenteditable="false">medial surface of the greater trochanter</td>
+                <td contenteditable="false">nerve to obturator internus (L5, S1, S2)</td>
+                <td contenteditable="false">inferior gluteal a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="gemellus_superior.jpg" data-label="Gemellus superior (위쌍둥이근)" contenteditable="false" aria-expanded="false"><span class="name-label">Gemellus superior (위쌍둥이근)</span></td>
+                <td contenteditable="false">ischial spine</td>
+                <td contenteditable="false">obturator internus tendon</td>
+                <td contenteditable="false">nerve to obturator internus (L5-S2)</td>
+                <td contenteditable="false">inferior gluteal a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="gemellus_inferior.jpg" data-label="Gemellus inferior (아래쌍둥이근)" contenteditable="false" aria-expanded="false"><span class="name-label">Gemellus inferior (아래쌍둥이근)</span></td>
+                <td contenteditable="false">ischial tuberosity</td>
+                <td contenteditable="false">obturator internus tendon</td>
+                <td contenteditable="false">n. to quadratus femoris (L4-S1)</td>
+                <td contenteditable="false">inferior gluteal a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="quadratus_femoris.jpg" data-label="Quadratus femoris (넙다리네모근)" contenteditable="false" aria-expanded="false"><span class="name-label">Quadratus femoris (넙다리네모근)</span></td>
+                <td contenteditable="false">lateral side of ischial tuberosity</td>
+                <td contenteditable="false">intertrochanteric crest (quadrate tubercle)</td>
+                <td contenteditable="false">nerve to quadratus femoris (L4-S1)</td>
+                <td contenteditable="false">inferior gluteal a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="obturator_externus.jpg" data-label="Obturator externus (바깥폐쇄근)" contenteditable="false" aria-expanded="false"><span class="name-label">Obturator externus (바깥폐쇄근)</span></td>
+                <td contenteditable="false">outer surface of obturator membrane and obturator foramen</td>
+                <td contenteditable="false">trochanteric fossa</td>
+                <td contenteditable="false">obturator n.</td>
+                <td contenteditable="false">internal iliac branches 계열</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="padding:10px 12px;">
+          <div class="memo-box" contenteditable="false" style="border:1px solid #ccc; padding:8px; margin-bottom:8px; min-height:60px; background:#fafafa;">safe area for intramuscular (IM) injection<div>Trendelenburg's sign : due to damage in sup. gluteal n.</div><div>triceps coxae : obturator internus, superior gemellus, inferior gemellus</div></div>
+          <button class="edit-btn" data-editing="false">편집</button>
+        </div>
+      </section>
+
+      <section id="l13_1" class="sec panel">
+        <div class="panel-head">
+          <h2>13. 종아리의 구조와 기능-1</h2>
+          <p></p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Muscle</th>
+                <th>Origin</th>
+                <th>Insertion</th>
+                <th>Nerve innervation</th>
+                <th>Blood supply artery</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="tibialis_anterior.jpg" data-label="Tibialis anterior (TA, 앞정강근)" contenteditable="false" aria-expanded="false"><span class="name-label">Tibialis anterior (TA, 앞정강근)</span></td>
+                <td contenteditable="false">lateral surface of tibia and interosseous membrane</td>
+                <td contenteditable="false">medial cuneiform, 1st metatarsal bone</td>
+                <td contenteditable="false">deep peroneal (fibular) n.</td>
+                <td contenteditable="false">anterior tibial a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="extensor_digitorum_longus.jpg" data-label="Extensor digitorum longus (EDL, 긴발가락폄근)" contenteditable="false" aria-expanded="false"><span class="name-label">Extensor digitorum longus (EDL, 긴발가락폄근)</span></td>
+                <td contenteditable="false">lateral condyle of tibia, anterior surface of fibula, interosseous membrane</td>
+                <td contenteditable="false">middle (central slip) and distal (collateral slip) phalanges of lateral four digits</td>
+                <td contenteditable="false">deep peroneal n.</td>
+                <td contenteditable="false">anterior tibial a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="extensor_hallucis_longus.jpg" data-label="Extensor hallucis longus (EHL, 긴엄지폄근)" contenteditable="false" aria-expanded="false"><span class="name-label">Extensor hallucis longus (EHL, 긴엄지폄근)</span></td>
+                <td contenteditable="false">anterior surface of fibula (middle 1/2) and interosseous membrane</td>
+                <td contenteditable="false">distal phalanges of the big toe</td>
+                <td contenteditable="false">deep peroneal n.</td>
+                <td contenteditable="false">anterior tibial a. / dorsalis pedis a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="fibularis_tertius.jpg" data-label="Fibularis (peroneus) tertius (FT, 셋째종아리근)" contenteditable="false" aria-expanded="false"><span class="name-label">Fibularis (peroneus) tertius (FT, 셋째종아리근)</span></td>
+                <td contenteditable="false">anterior surface of fibula (distal 1/3), interosseous membrane</td>
+                <td contenteditable="false">dorsal surface of metatarsal 5</td>
+                <td contenteditable="false">deep peroneal n.</td>
+                <td contenteditable="false">anterior tibial a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="fibularis_longus.jpg" data-label="Fibularis (peroneus) longus (FL, 긴종아리근)" contenteditable="false" aria-expanded="false"><span class="name-label">Fibularis (peroneus) longus (FL, 긴종아리근)</span></td>
+                <td contenteditable="false">head and lateral surface of fibula</td>
+                <td contenteditable="false">medial cuneiform, 1st metatarsal bone</td>
+                <td contenteditable="false">superficial peroneal n.</td>
+                <td contenteditable="false">fibular (peroneal) a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="fibularis_brevis.jpg" data-label="Fibularis (peroneus) brevis (FB, 짧은종아리근)" contenteditable="false" aria-expanded="false"><span class="name-label">Fibularis (peroneus) brevis (FB, 짧은종아리근)</span></td>
+                <td contenteditable="false">lateral surface of fibula (below FL origin)</td>
+                <td contenteditable="false">5th metatarsal bone</td>
+                <td contenteditable="false">superficial peroneal n.</td>
+                <td contenteditable="false">fibular (peroneal) a.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="padding:10px 12px;">
+          <div class="memo-box" contenteditable="false" style="border:1px solid #ccc; padding:8px; margin-bottom:8px; min-height:60px; background:#fafafa;">anterior crural muscles : deep peroneal (fibular) n.<div>lateral crural muscles : superficial peroneal (fibular) n.</div><div>common peroneal nerve injury → footdrop</div></div>
+          <button class="edit-btn" data-editing="false">편집</button>
+        </div>
+      </section>
+
+      <section id="l13_2" class="sec panel">
+        <div class="panel-head">
+          <h2>13. 종아리의 구조와 기능-2</h2>
+          <p></p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Muscle</th>
+                <th>Origin</th>
+                <th>Insertion</th>
+                <th>Nerve innervation</th>
+                <th>Blood supply artery</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="gastrocnemius.jpg" data-label="Gastrocnemius (장딴지근)" contenteditable="false" aria-expanded="false"><span class="name-label">Gastrocnemius (장딴지근)</span></td>
+                <td contenteditable="false">lateral and medial condyle of femur</td>
+                <td contenteditable="false">tendo calcanei (Achilles tendon)</td>
+                <td contenteditable="false">tibial n.</td>
+                <td contenteditable="false">posterior tibial a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="soleus.jpg" data-label="Soleus (가자미근)" contenteditable="false" aria-expanded="false"><span class="name-label">Soleus (가자미근)</span></td>
+                <td contenteditable="false">fibular head, soleal line of tibia</td>
+                <td contenteditable="false">tendo calcanei</td>
+                <td contenteditable="false">tibial n.</td>
+                <td contenteditable="false">posterior tibial a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="plantaris.jpg" data-label="Plantaris (장딴지빗근)" contenteditable="false" aria-expanded="false"><span class="name-label">Plantaris (장딴지빗근)</span></td>
+                <td contenteditable="false">lateral supracondylar ridge</td>
+                <td contenteditable="false">tendo calcanei</td>
+                <td contenteditable="false">tibial n.</td>
+                <td contenteditable="false">posterior tibial a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="popliteus.jpg" data-label="Popliteus (오금근)" contenteditable="false" aria-expanded="false"><span class="name-label">Popliteus (오금근)</span></td>
+                <td contenteditable="false">lateral femoral epicondyle</td>
+                <td contenteditable="false">soleal line</td>
+                <td contenteditable="false">tibial n.</td>
+                <td contenteditable="false">popliteal a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="flexor_hallucis_longus.jpg" data-label="Flexor hallucis longus (FHL, 긴엄지굽힘근)" contenteditable="false" aria-expanded="false"><span class="name-label">Flexor hallucis longus (FHL, 긴엄지굽힘근)</span></td>
+                <td contenteditable="false">posterior surface of fibula (middle 1/3)</td>
+                <td contenteditable="false">base of distal phalanges of hallux</td>
+                <td contenteditable="false">tibial n.</td>
+                <td contenteditable="false">fibular (peroneal) a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="flexor_digitorum_longus.jpg" data-label="Flexor digitorum longus (FDL, 긴발가락굽힘근)" contenteditable="false" aria-expanded="false"><span class="name-label">Flexor digitorum longus (FDL, 긴발가락굽힘근)</span></td>
+                <td contenteditable="false">posterior surface of tibia (below soleal line)</td>
+                <td contenteditable="false">base of distal phalanges of four lesser toes</td>
+                <td contenteditable="false">tibial n.</td>
+                <td contenteditable="false">posterior tibial a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="tibialis_posterior.jpg" data-label="Tibialis posterior (PT, 뒤정강근)" contenteditable="false" aria-expanded="false"><span class="name-label">Tibialis posterior (PT, 뒤정강근)</span></td>
+                <td contenteditable="false">posterior surface of tibia and fibula, interosseous membrane</td>
+                <td contenteditable="false">tuberosity of navicular bone, medial cuneiform, base of 2-4 metatarsals</td>
+                <td contenteditable="false">tibial n.</td>
+                <td contenteditable="false">posterior tibial a.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="padding:10px 12px;">
+          <div class="memo-box" contenteditable="false" style="border:1px solid #ccc; padding:8px; margin-bottom:8px; min-height:60px; background:#fafafa;">posterior crural muscles : tibial n.<div>triceps surae : gastrocnemius, soleus, plantaris</div><div>tendo calcanei (Achilles tendon)</div></div>
+          <button class="edit-btn" data-editing="false">편집</button>
+        </div>
+      </section>
+
+      <section id="ft15_1" class="sec panel">
+        <div class="panel-head">
+          <h2>15. 발의 구조와 기능-1</h2>
+          <p></p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Muscle</th>
+                <th>Origin</th>
+                <th>Insertion</th>
+                <th>Nerve innervation</th>
+                <th>Blood supply artery</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="extensor_digitorum_brevis.jpg" data-label="Extensor digitorum brevis (EDB, 짧은발가락폄근)" contenteditable="false" aria-expanded="false"><span class="name-label">Extensor digitorum brevis (EDB, 짧은발가락폄근)</span></td>
+                <td contenteditable="false">dorsal surface of calcaneus</td>
+                <td contenteditable="false">tendons of EDL of 2-4th toes</td>
+                <td contenteditable="false">deep peroneal n.</td>
+                <td contenteditable="false">-</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="extensor_hallucis_brevis.jpg" data-label="Extensor hallucis brevis (EHB, 짧은엄지폄근)" contenteditable="false" aria-expanded="false"><span class="name-label">Extensor hallucis brevis (EHB, 짧은엄지폄근)</span></td>
+                <td contenteditable="false">dorsal surface of calcaneus</td>
+                <td contenteditable="false">proximal phalange of big toe</td>
+                <td contenteditable="false">deep peroneal n.</td>
+                <td contenteditable="false">-</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="padding:10px 12px;">
+          <div class="memo-box" contenteditable="false" style="border:1px solid #ccc; padding:8px; margin-bottom:8px; min-height:60px; background:#fafafa;">Foot muscles (dorsal)</div>
+          <button class="edit-btn" data-editing="false">편집</button>
+        </div>
+      </section>
+
+      <section id="ft15_2" class="sec panel">
+        <div class="panel-head">
+          <h2>15. 발의 구조와 기능-2</h2>
+          <p></p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Muscle</th>
+                <th>Origin</th>
+                <th>Insertion</th>
+                <th>Nerve innervation</th>
+                <th>Blood supply artery</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="abductor_hallucis_foot.jpg" data-label="Abductor hallucis (엄지벌림근)" contenteditable="false" aria-expanded="false"><span class="name-label">Abductor hallucis (엄지벌림근)</span></td>
+                <td contenteditable="false">medial process of calcaneal tuberosity, plantar aponeurosis</td>
+                <td contenteditable="false">medial surface of proximal phalanx of big toe</td>
+                <td contenteditable="false">medial plantar n. (from tibial n.)</td>
+                <td contenteditable="false">-</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="abductor_digiti_minimi_foot.jpg" data-label="Abductor digiti minimi (새끼벌림근)" contenteditable="false" aria-expanded="false"><span class="name-label">Abductor digiti minimi (새끼벌림근)</span></td>
+                <td contenteditable="false">medial and lateral process of calcaneal tuberosity, plantar aponeurosis</td>
+                <td contenteditable="false">lateral surface of proximal phalanx of 5th toe</td>
+                <td contenteditable="false">lateral plantar n.</td>
+                <td contenteditable="false">-</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="flexor_digitorum_brevis_foot.jpg" data-label="Flexor digitorum brevis (짧은발가락굽힘근)" contenteditable="false" aria-expanded="false"><span class="name-label">Flexor digitorum brevis (짧은발가락굽힘근)</span></td>
+                <td contenteditable="false">medial process of calcaneal tuberosity, plantar aponeurosis → 4 tendons</td>
+                <td contenteditable="false">middle phalanges of toe 2-5 (by 2 slips)</td>
+                <td contenteditable="false">medial plantar n.</td>
+                <td contenteditable="false">-</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="quadratus_plantae.jpg" data-label="Quadratus plantae (발바닥네모근)" contenteditable="false" aria-expanded="false"><span class="name-label">Quadratus plantae (발바닥네모근)</span></td>
+                <td contenteditable="false">medial and lateral surface of calcaneal body</td>
+                <td contenteditable="false">tendon of flexor digitorum longus</td>
+                <td contenteditable="false">lateral plantar n.</td>
+                <td contenteditable="false">-</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="lumbricals_foot.jpg" data-label="Lumbricals (벌레근)" contenteditable="false" aria-expanded="false"><span class="name-label">Lumbricals (벌레근)</span></td>
+                <td contenteditable="false">tendon of flexor digitorum longus</td>
+                <td contenteditable="false">proximal phalanges of toe 2-5 and extensor hood</td>
+                <td contenteditable="false">medial plantar n. (toe 2), lateral plantar n. (toe 3-5)</td>
+                <td contenteditable="false">-</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="padding:10px 12px;">
+          <div class="memo-box" contenteditable="false" style="border:1px solid #ccc; padding:8px; margin-bottom:8px; min-height:60px; background:#fafafa;">Muscles of the 1st layer + 2nd layer</div>
+          <button class="edit-btn" data-editing="false">편집</button>
+        </div>
+      </section>
+
+      <section id="ft15_3" class="sec panel">
+        <div class="panel-head">
+          <h2>15. 발의 구조와 기능-3</h2>
+          <p></p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Muscle</th>
+                <th>Origin</th>
+                <th>Insertion</th>
+                <th>Nerve innervation</th>
+                <th>Blood supply artery</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="flexor_hallucis_brevis_foot.jpg" data-label="Flexor hallucis brevis (짧은엄지굽힘근)" contenteditable="false" aria-expanded="false"><span class="name-label">Flexor hallucis brevis (짧은엄지굽힘근)</span></td>
+                <td contenteditable="false">cuboid, lateral cuneiform bone</td>
+                <td contenteditable="false">both sides of proximal phalanges of big toe (sesamoid bone)</td>
+                <td contenteditable="false">medial plantar n.</td>
+                <td contenteditable="false">-</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="adductor_hallucis_foot.jpg" data-label="Adductor hallucis (엄지모음근)" contenteditable="false" aria-expanded="false"><span class="name-label">Adductor hallucis (엄지모음근)</span></td>
+                <td contenteditable="false">oblique head: 2-4 metatarsal bones / transverse head: plantar metatarsophalangeal lig., transverse metatarsal lig.</td>
+                <td contenteditable="false">lateral sides of proximal phalanges of big toe</td>
+                <td contenteditable="false">deep br. of lateral plantar n.</td>
+                <td contenteditable="false">-</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="flexor_digiti_minimi_brevis_foot.jpg" data-label="Flexor digiti minimi brevis (짧은새끼굽힘근)" contenteditable="false" aria-expanded="false"><span class="name-label">Flexor digiti minimi brevis (짧은새끼굽힘근)</span></td>
+                <td contenteditable="false">the fifth metatarsal bone</td>
+                <td contenteditable="false">proximal phalanx of the fifth toe</td>
+                <td contenteditable="false">lateral plantar n.</td>
+                <td contenteditable="false">-</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="dorsal_interosseous_foot.jpg" data-label="Dorsal interosseous (등쪽뼈사이근)" contenteditable="false" aria-expanded="false"><span class="name-label">Dorsal interosseous (등쪽뼈사이근)</span></td>
+                <td contenteditable="false">1-5 metatarsal bone</td>
+                <td contenteditable="false">proximal phalanges: medial side (1st), lateral side (2-4)</td>
+                <td contenteditable="false">lateral plantar n.</td>
+                <td contenteditable="false">-</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="plantar_interosseous_foot.jpg" data-label="Plantar interosseous (바닥쪽뼈사이근)" contenteditable="false" aria-expanded="false"><span class="name-label">Plantar interosseous (바닥쪽뼈사이근)</span></td>
+                <td contenteditable="false">3-5 metatarsal bone</td>
+                <td contenteditable="false">medial side of proximal phalanges (3-5)</td>
+                <td contenteditable="false">lateral plantar n.</td>
+                <td contenteditable="false">-</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="padding:10px 12px;">
+          <div class="memo-box" contenteditable="false" style="border:1px solid #ccc; padding:8px; margin-bottom:8px; min-height:60px; background:#fafafa;">Muscles of the 3rd layer + 4th layer</div>
+          <button class="edit-btn" data-editing="false">편집</button>
+        </div>
+      </section>
+
+
+      <section id="t16" class="sec panel">
+        <div class="panel-head">
+          <h2>16. 가슴벽의 구조와 기능</h2>
+          <p></p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Muscle</th>
+                <th>Origin</th>
+                <th>Insertion</th>
+                <th>Nerve innervation</th>
+                <th>Blood supply artery</th>
+              </tr>
+            </thead>
+            <tbody>
+
+<tr>
+<td class="muscle-name" tabindex="0" data-file="serratus_posterior_superior.jpg" data-label="Serratus posterior superior (위뒤톱니근)" contenteditable="false" aria-expanded="false"><span class="name-label">Serratus posterior superior (위뒤톱니근)</span></td>
+<td contenteditable="false">nuchal lig., spinous process of C7-T3</td>
+<td contenteditable="false">upper borders of ribs 2-5</td>
+<td contenteditable="false">intercostal n.</td>
+<td contenteditable="false">posterior intercostal a.</td>
+</tr>
+
+<tr>
+<td class="muscle-name" tabindex="0" data-file="serratus_posterior_inferior.jpg" data-label="Serratus posterior inferior (아래뒤톱니근)" contenteditable="false" aria-expanded="false"><span class="name-label">Serratus posterior inferior (아래뒤톱니근)</span></td>
+<td contenteditable="false">spinous process of T11-L2</td>
+<td contenteditable="false">inferior borders of ribs 9-12</td>
+<td contenteditable="false">intercostal n.</td>
+<td contenteditable="false">posterior intercostal a.</td>
+</tr>
+
+<tr>
+<td class="muscle-name" tabindex="0" data-file="levatores_costarum.jpg" data-label="Levatores costarum m. (갈비올림근)" contenteditable="false" aria-expanded="false"><span class="name-label">Levatores costarum m. (갈비올림근)</span></td>
+<td contenteditable="false">transverse processes of C7 ~ T11</td>
+<td contenteditable="false">rib tubercle (below its origin)</td>
+<td contenteditable="false">posterior rami of spinal n.</td>
+<td contenteditable="false">posterior intercostal a.</td>
+</tr>
+
+<tr>
+<td class="muscle-name" tabindex="0" data-file="external_intercostal.jpg" data-label="External intercostal m. (바깥갈비사이근)" contenteditable="false" aria-expanded="false"><span class="name-label">External intercostal m. (바깥갈비사이근)</span></td>
+<td contenteditable="false">ribs 1-11</td>
+<td contenteditable="false">ribs 2-12</td>
+<td contenteditable="false">intercostal n.</td>
+<td contenteditable="false">intercostal a.</td>
+</tr>
+
+<tr>
+<td class="muscle-name" tabindex="0" data-file="internal_intercostal.jpg" data-label="Internal intercostal m. (속갈비사이근)" contenteditable="false" aria-expanded="false"><span class="name-label">Internal intercostal m. (속갈비사이근)</span></td>
+<td contenteditable="false">ribs 2-12</td>
+<td contenteditable="false">ribs 1-11</td>
+<td contenteditable="false">intercostal n.</td>
+<td contenteditable="false">intercostal a.</td>
+</tr>
+
+<tr>
+<td class="muscle-name" tabindex="0" data-file="innermost_intercostal.jpg" data-label="Innermost intercostal m. (맨속갈비사이근)" contenteditable="false" aria-expanded="false"><span class="name-label">Innermost intercostal m. (맨속갈비사이근)</span></td>
+<td contenteditable="false">ribs</td>
+<td contenteditable="false">adjacent ribs</td>
+<td contenteditable="false">intercostal n.</td>
+<td contenteditable="false">intercostal a.</td>
+</tr>
+
+<tr>
+<td class="muscle-name" tabindex="0" data-file="subcostalis.jpg" data-label="Subcostalis (갈비밑근)" contenteditable="false" aria-expanded="false"><span class="name-label">Subcostalis (갈비밑근)</span></td>
+<td contenteditable="false">inner surface of one rib</td>
+<td contenteditable="false">inner surface of the second or third rib below</td>
+<td contenteditable="false">intercostal n.</td>
+<td contenteditable="false">intercostal a.</td>
+</tr>
+
+<tr>
+<td class="muscle-name" tabindex="0" data-file="transversus_thoracis.jpg" data-label="Transversus thoracis (가슴가로근)" contenteditable="false" aria-expanded="false"><span class="name-label">Transversus thoracis (가슴가로근)</span></td>
+<td contenteditable="false">costal cartilages of last 3rd – 4th true ribs, body of sternum, xiphoid process</td>
+<td contenteditable="false">ribs / costal cartilages 2nd – 6th</td>
+<td contenteditable="false">intercostal n.</td>
+<td contenteditable="false">internal thoracic a.</td>
+</tr>
+
+<tr>
+<td class="muscle-name" tabindex="0" data-file="diaphragm.jpg" data-label="Diaphragm (횡경막, 가로막)" contenteditable="false" aria-expanded="false"><span class="name-label">Diaphragm (횡경막, 가로막)</span></td>
+<td contenteditable="false">-</td>
+<td contenteditable="false">-</td>
+<td contenteditable="false">-</td>
+<td contenteditable="false">-</td>
+</tr>
+
+            </tbody>
+          </table>
+        </div>
+        <div style="padding:10px 12px;">
+          <div class="memo-box" contenteditable="false" style="border:1px solid #ccc; padding:8px; margin-bottom:8px; min-height:60px; background:#fafafa;">Muscles of thoracic wall</div>
+          <button class="edit-btn" data-editing="false">편집</button>
+        </div>
+      </section>
+
+
+      <section id="ab25" class="sec panel">
+        <div class="panel-head">
+          <h2>25. 배벽과 복강의 구조와 기능</h2>
+          <p></p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Muscle</th>
+                <th>Origin</th>
+                <th>Insertion</th>
+                <th>Nerve innervation</th>
+                <th>Blood supply artery</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="external_oblique.jpg" data-label="External oblique (배바깥빗근)" contenteditable="false" aria-expanded="false"><span class="name-label">External oblique (배바깥빗근)</span></td>
+                <td contenteditable="false">external surfaces of 5th ~ 12th ribs</td>
+                <td contenteditable="false">linea alba, anterior half of iliac crest, pubic tubercle, pubic crest, inguinal lig.</td>
+                <td contenteditable="false">thoracoabdominal n. (T7-11), subcostal n. (T12)</td>
+                <td contenteditable="false">superior epigastric a., inferior epigastric a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="internal_oblique.jpg" data-label="Internal oblique (배속빗근)" contenteditable="false" aria-expanded="false"><span class="name-label">Internal oblique (배속빗근)</span></td>
+                <td contenteditable="false">thoracolumbar fascia, anterior two thirds of iliac crest, inguinal lig.</td>
+                <td contenteditable="false">inf. borders of 10th~12th ribs, linea alba, pectin pubis (via conjoint tendon)</td>
+                <td contenteditable="false">thoracoabdominal n. (T7-11), subcostal n. (T12), the first lumbar n.</td>
+                <td contenteditable="false">superior epigastric a., inferior epigastric a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="transversus_abdominis.jpg" data-label="Transversus abdominis (배가로근)" contenteditable="false" aria-expanded="false"><span class="name-label">Transversus abdominis (배가로근)</span></td>
+                <td contenteditable="false">internal surfaces of 7th~12th costal cartilages, thoracolumbar fascia, iliac crest, inguinal lig.</td>
+                <td contenteditable="false">linea alba, pubic crest, pectin pubis (via conjoint tendon)</td>
+                <td contenteditable="false">thoracoabdominal n. (T6-11), subcostal n. (T12), the first lumbar n.</td>
+                <td contenteditable="false">superior epigastric a., inferior epigastric a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="rectus_abdominis.jpg" data-label="Rectus abdominis (배곧은근)" contenteditable="false" aria-expanded="false"><span class="name-label">Rectus abdominis (배곧은근)</span></td>
+                <td contenteditable="false">pubic symphysis, pubic crest</td>
+                <td contenteditable="false">xiphoid process, 5th~7th costal cartilages</td>
+                <td contenteditable="false">thoracoabdominal n. (T6-12)</td>
+                <td contenteditable="false">superior epigastric a., inferior epigastric a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="pyramidalis.jpg" data-label="Pyramidalis (배세모근)" contenteditable="false" aria-expanded="false"><span class="name-label">Pyramidalis (배세모근)</span></td>
+                <td contenteditable="false">pubic symphysis, pubic crest</td>
+                <td contenteditable="false">linea alba</td>
+                <td contenteditable="false">-</td>
+                <td contenteditable="false">inferior epigastric a.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="padding:10px 12px;">
+          <div class="memo-box" contenteditable="false" style="border:1px solid #ccc; padding:8px; margin-bottom:8px; min-height:60px; background:#fafafa;">main arteries of the anterolateral abdominal wall : sup. epigastric a. (from internal thoracic a.), inf. epigastric a. (from external iliac a.)<div>rectus sheath, linea alba, arcuate line</div></div>
+          <button class="edit-btn" data-editing="false">편집</button>
+        </div>
+      </section>
+
+
+      <section id="pd26" class="sec panel">
+        <div class="panel-head">
+          <h2>26. 가로막과 뒤배벽의 구조와 기능</h2>
+          <p></p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Muscle</th>
+                <th>Origin</th>
+                <th>Insertion</th>
+                <th>Nerve innervation</th>
+                <th>Blood supply artery</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="diaphragm.jpg" data-label="Diaphragm (가로막)" contenteditable="false" aria-expanded="false"><span class="name-label">Diaphragm (가로막)</span></td>
+                <td contenteditable="false">sternal part: xiphoid process of sternum / costal part: ribs and costal cartilages / lumbar part: lumbar vertebra, medial &amp; lateral arcuate lig., crura</td>
+                <td contenteditable="false">central tendon (trifoliate central aponeurotic part)</td>
+                <td contenteditable="false">motor: phrenic n. (C3-C5) / sensory: phrenic n. (C3-C5), intercostal n. (lower 6-7), subcostal n.</td>
+                <td contenteditable="false">superior phrenic a. (from thoracic aorta), pericardiacophrenic &amp; musculophrenic a. (from internal thoracic a.), inferior phrenic a. (from abdominal aorta)</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="psoas_major.jpg" data-label="Psoas major (큰허리근)" contenteditable="false" aria-expanded="false"><span class="name-label">Psoas major (큰허리근)</span></td>
+                <td contenteditable="false">transverse processes of T12-L4, lateral aspects of their disc</td>
+                <td contenteditable="false">lesser trochanter of femur</td>
+                <td contenteditable="false">lumbar plexus (anterior br. of L1-L3)</td>
+                <td contenteditable="false">-</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="iliacus.jpg" data-label="Iliacus (엉덩근)" contenteditable="false" aria-expanded="false"><span class="name-label">Iliacus (엉덩근)</span></td>
+                <td contenteditable="false">upper 2/3 of iliac fossa</td>
+                <td contenteditable="false">base of lesser trochanter of femur, psoas major tendon</td>
+                <td contenteditable="false">femoral n. (L2-L4)</td>
+                <td contenteditable="false">-</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="quadratus_lumborum.jpg" data-label="Quadratus lumborum (허리네모근)" contenteditable="false" aria-expanded="false"><span class="name-label">Quadratus lumborum (허리네모근)</span></td>
+                <td contenteditable="false">posterior border of iliac crest</td>
+                <td contenteditable="false">inferior border of 12th rib and L1-L4</td>
+                <td contenteditable="false">anterior br. of T12, L1-L4</td>
+                <td contenteditable="false">-</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="padding:10px 12px;">
+          <div class="memo-box" contenteditable="false" style="border:1px solid #ccc; padding:8px; margin-bottom:8px; min-height:60px; background:#fafafa;">psoas minor muscle: absent in 50% or more<div>Iliacus + psoas major = iliopsoas (엉덩허리근) → major flexor of hip joint</div></div>
+          <button class="edit-btn" data-editing="false">편집</button>
+        </div>
+      </section>
+
+      <section id="gi27" class="sec panel">
+        <div class="panel-head">
+          <h2>27. 소화관과 내장의 구조</h2>
+          <p></p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Artery</th>
+                <th>Sympathetic</th>
+                <th>Parasympathetic</th>
+                <th>Other nerve</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="esophagus.jpg" data-label="Esophagus (식도)" contenteditable="false" aria-expanded="false"><span class="name-label">Esophagus (식도)</span></td>
+                <td contenteditable="false">branches of thoracic aorta</td>
+                <td contenteditable="false">thoracic sympathetic trunk</td>
+                <td contenteditable="false">vagal trunk</td>
+                <td contenteditable="false">esophageal plexus</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="stomach.jpg" data-label="Stomach (위)" contenteditable="false" aria-expanded="false"><span class="name-label">Stomach (위)</span></td>
+                <td contenteditable="false">celiac trunk<br>left gastric a.<br>right gastric a.<br>left gastro-omental a.<br>right gastro-omental a.<br>short gastric a.</td>
+                <td contenteditable="false">greater splanchnic n. (T6-T9) → celiac plexus</td>
+                <td contenteditable="false">anterior vagal trunk<br>posterior vagal trunk</td>
+                <td contenteditable="false">celiac plexus<br>thoracic splanchnic n.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="duodenum.jpg" data-label="Duodenum (샘창자, 십이지장)" contenteditable="false" aria-expanded="false"><span class="name-label">Duodenum (샘창자, 십이지장)</span></td>
+                <td contenteditable="false">superior pancreaticoduodenal a.<br>inferior pancreaticoduodenal a.</td>
+                <td contenteditable="false">greater and lesser splanchnic n.</td>
+                <td contenteditable="false">vagus n.</td>
+                <td contenteditable="false">celiac plexus<br>superior mesenteric plexus<br>periarterial plexus</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="jejunum_ileum.jpg" data-label="Jejunum &amp; Ileum (빈창자, 공장 &amp; 돌창자, 회장)" contenteditable="false" aria-expanded="false"><span class="name-label">Jejunum &amp; Ileum (빈창자, 공장 &amp; 돌창자, 회장)</span></td>
+                <td contenteditable="false">superior mesenteric a.<br>jejunal a.<br>ileal a.</td>
+                <td contenteditable="false">T8-T10 → sympathetic trunk → abdominopelvic splanchnic n. → superior mesenteric nerve plexus</td>
+                <td contenteditable="false">vagus n.</td>
+                <td contenteditable="false">visceral afferent n.<br>myenteric plexus<br>submucosal plexus</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="cecum_appendix.jpg" data-label="Cecum &amp; Appendix (막창자 &amp; 막창자꼬리, 충수돌기)" contenteditable="false" aria-expanded="false"><span class="name-label">Cecum &amp; Appendix (막창자 &amp; 막창자꼬리, 충수돌기)</span></td>
+                <td contenteditable="false">ileocolic a.<br>appendicular a.</td>
+                <td contenteditable="false">superior mesenteric plexus</td>
+                <td contenteditable="false">superior mesenteric plexus</td>
+                <td contenteditable="false">superior mesenteric plexus</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="colon.jpg" data-label="Colon (잘록창자, 결장)" contenteditable="false" aria-expanded="false"><span class="name-label">Colon (잘록창자, 결장)</span></td>
+                <td contenteditable="false">ascending: ileocolic a. + right colic a.<br>transverse: middle colic a. descending &amp; sigmoid: left colic a. + sigmoid a.</td>
+                <td contenteditable="false">ascending &amp; transverse: abdominopelvic splanchnic n.<br>descending &amp; sigmoid: lumbar splanchnic n.</td>
+                <td contenteditable="false">ascending &amp; transverse: vagus n.<br>descending &amp; sigmoid: pelvic splanchnic n.</td>
+                <td contenteditable="false">superior mesenteric plexus<br>inferior mesenteric plexus<br>inferior hypogastric plexus<br>peri-arterial plexus</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="padding:10px 12px;">
+          <div class="memo-box" contenteditable="false" style="border:1px solid #ccc; padding:8px; margin-bottom:8px; min-height:60px; background:#fafafa;">GI viscera summary</div>
+          <button class="edit-btn" data-editing="false">편집</button>
+        </div>
+      </section>
+
+      <section id="ab29" class="sec panel active">
+        <div class="panel-head">
+          <h2>29. 복부장기의 구조와 기능</h2>
+          <p></p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Artery</th>
+                <th>Sympathetic</th>
+                <th>Parasympathetic</th>
+                <th>Other nerve</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="spleen.jpg" data-label="Spleen (지라, 비장)" contenteditable="false" aria-expanded="false"><span class="name-label">Spleen (지라, 비장)</span></td>
+                <td contenteditable="false">splenic a. (from celiac trunk)</td>
+                <td contenteditable="false">-</td>
+                <td contenteditable="false">-</td>
+                <td contenteditable="false">celiac n. plexus, vasomotor (혈관운동)</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="pancreas.jpg" data-label="Pancreas (이자)" contenteditable="false" aria-expanded="false"><span class="name-label">Pancreas (이자)</span></td>
+                <td contenteditable="false">branches of pancreatic a. (from splenic a.), branches of gastroduodenal a.</td>
+                <td contenteditable="false">abdominopelvic splanchnic n.</td>
+                <td contenteditable="false">vagus n.</td>
+                <td contenteditable="false">celiac plexus, sup. mesenteric plexus</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="liver.jpg" data-label="Liver (간)" contenteditable="false" aria-expanded="false"><span class="name-label">Liver (간)</span></td>
+                <td contenteditable="false">from celiac trunk – common hepatic a. – hepatic a. proper (고유간동맥)</td>
+                <td contenteditable="false">-</td>
+                <td contenteditable="false">-</td>
+                <td contenteditable="false">hepatic plexus from celiac plexus</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="bile_duct.jpg" data-label="Bile duct (쓸개관)" contenteditable="false" aria-expanded="false"><span class="name-label">Bile duct (쓸개관)</span></td>
+                <td contenteditable="false">cystic a. (from right hepatic a.)<br>right hepatic a. (from celiac a.)<br>gastroduodenal a.<br>post. sup. pancreaticoduodenal a. (from gastroduodenal a.)</td>
+                <td contenteditable="false">-</td>
+                <td contenteditable="false">-</td>
+                <td contenteditable="false">-</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="gallbladder.jpg" data-label="Gallbladder (쓸개)" contenteditable="false" aria-expanded="false"><span class="name-label">Gallbladder (쓸개)</span></td>
+                <td contenteditable="false">cystic a.</td>
+                <td contenteditable="false">sympathetic n. from celiac ganglion</td>
+                <td contenteditable="false">parasympathetic n. from anterior vagus n.</td>
+                <td contenteditable="false">sensory n. from right phrenic n.<br>peri-arterial plexus along cystic a.</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="kidney.jpg" data-label="Kidney (콩팥)" contenteditable="false" aria-expanded="false"><span class="name-label">Kidney (콩팥)</span></td>
+                <td contenteditable="false">renal a. → 5 segmental a. (→ renal segment), right &gt; left<br>accessory renal a.: ~ 25%</td>
+                <td contenteditable="false">sympathetic (from least splanchnic n.)</td>
+                <td contenteditable="false">parasympathetic n. (vagus n.)</td>
+                <td contenteditable="false">renal nerve plexus</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="ureter.jpg" data-label="Ureter (요관)" contenteditable="false" aria-expanded="false"><span class="name-label">Ureter (요관)</span></td>
+                <td contenteditable="false">renal a.<br>testicular a.<br>ovarian a.<br>common iliac a.</td>
+                <td contenteditable="false">-</td>
+                <td contenteditable="false">-</td>
+                <td contenteditable="false">renal nerve plexus<br>abdominal aortic plexus<br>sup. hypogastric plexus</td>
+              </tr>
+              <tr>
+                <td class="muscle-name" tabindex="0" data-file="suprarenal_gland.jpg" data-label="Suprarenal gland (부신)" contenteditable="false" aria-expanded="false"><span class="name-label">Suprarenal gland (부신)</span></td>
+                <td contenteditable="false">sup. suprarenal a.: 6-8 from inf. phrenic a.<br>middle suprarenal a.: from aorta<br>inf. suprarenal a.: from renal a.</td>
+                <td contenteditable="false">medulla: presynaptic sympathetic fibers from IML of T10-L1 (without synapse)</td>
+                <td contenteditable="false">vagus n.</td>
+                <td contenteditable="false">celiac plexus<br>abdominopelvic splanchnic n.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="padding:10px 12px;">
+          <div class="memo-box" contenteditable="false" style="border:1px solid #ccc; padding:8px; margin-bottom:8px; min-height:60px; background:#fafafa;">Abdominal viscera summary</div>
+          <button class="edit-btn" data-editing="false">편집</button>
+        </div>
+      </section>
+
+
+    </div>
+  </div>
+</div>
+
+<script>
+const tabs = document.querySelectorAll('.tab');
+const secs = document.querySelectorAll('.sec');
+const names = document.querySelectorAll('.muscle-name');
+let openPopupCell = null;
+
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    tabs.forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    secs.forEach(sec => sec.classList.remove('active'));
+    const target = document.getElementById(tab.dataset.target);
+    if (target) target.classList.add('active');
+    closeAllPopups();
+  });
+});
+
+function closePopup(cell){
+  const popup = document.querySelector('.name-popup.open') || document.querySelector('.name-popup');
+  if (!popup) {
+    if (cell) cell.setAttribute('aria-expanded', 'false');
+    if (openPopupCell === cell) openPopupCell = null;
+    return;
+  }
+  popup.remove();
+  if (cell) cell.setAttribute('aria-expanded', 'false');
+  if (openPopupCell === cell) openPopupCell = null;
+}
+
+function closeAllPopups(){
+  document.querySelectorAll('.name-popup').forEach(popup => popup.remove());
+  names.forEach(cell => cell.setAttribute('aria-expanded', 'false'));
+  openPopupCell = null;
+}
+
+function positionPopup(popup, cell){
+  const gap = 12;
+  const margin = 10;
+  const rect = cell.getBoundingClientRect();
+
+  popup.style.left = '0px';
+  popup.style.top = '0px';
+
+  requestAnimationFrame(() => {
+    const popupRect = popup.getBoundingClientRect();
+    let left = rect.right + gap;
+    let top = rect.top + (rect.height - popupRect.height) / 2;
+
+    if (left + popupRect.width > window.innerWidth - margin) {
+      left = rect.left - popupRect.width - gap;
+    }
+
+    if (left < margin) {
+      left = Math.max(margin, Math.min(rect.left, window.innerWidth - popupRect.width - margin));
+    }
+
+    if (top + popupRect.height > window.innerHeight - margin) {
+      top = window.innerHeight - popupRect.height - margin;
+    }
+
+    if (top < margin) {
+      top = margin;
+    }
+
+    popup.style.left = left + 'px';
+    popup.style.top = top + 'px';
+  });
+}
+
+function buildPopup(cell){
+  const file = cell.dataset.file || '';
+  const label = cell.dataset.label || cell.textContent.trim();
+  const path = './image/' + file;
+
+  const popup = document.createElement('div');
+  popup.className = 'name-popup';
+
+  const imgEl = document.createElement('img');
+  imgEl.alt = label;
+  imgEl.style.display = 'none';
+
+  const fallback = document.createElement('div');
+  fallback.className = 'name-popup-fallback';
+  fallback.textContent = label;
+
+  const pathEl = document.createElement('div');
+  pathEl.className = 'name-popup-path';
+  pathEl.innerHTML = '경로: <code>' + path + '</code>';
+
+  popup.appendChild(imgEl);
+  popup.appendChild(fallback);
+  popup.appendChild(pathEl);
+
+  if (file) {
+    const test = new Image();
+    test.onload = () => {
+      imgEl.src = path;
+      imgEl.style.display = 'block';
+      fallback.style.display = 'none';
+      positionPopup(popup, cell);
+    };
+    test.onerror = () => {
+      imgEl.removeAttribute('src');
+      imgEl.style.display = 'none';
+      fallback.style.display = 'flex';
+      positionPopup(popup, cell);
+    };
+    test.src = path;
+  } else {
+    fallback.style.display = 'flex';
+    positionPopup(popup, cell);
+  }
+
+  return popup;
+}
+
+function togglePopup(cell){
+  if (openPopupCell === cell) {
+    closePopup(cell);
+    return;
+  }
+
+  closeAllPopups();
+  const popup = buildPopup(cell);
+  document.body.appendChild(popup);
+  cell.setAttribute('aria-expanded', 'true');
+  popup.classList.add('open');
+  openPopupCell = cell;
+  positionPopup(popup, cell);
+}
+
+names.forEach(cell => {
+  if (!cell.querySelector('.name-label')) {
+    const text = cell.textContent;
+    cell.textContent = '';
+    const labelSpan = document.createElement('span');
+    labelSpan.className = 'name-label';
+    labelSpan.textContent = text;
+    cell.appendChild(labelSpan);
+  }
+
+  cell.setAttribute('aria-expanded', 'false');
+  cell.addEventListener('click', (event) => {
+    event.stopPropagation();
+    togglePopup(cell);
+  });
+
+  cell.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      togglePopup(cell);
+    }
+    if (event.key === 'Escape') {
+      closePopup(cell);
+    }
+  });
+});
+
+document.addEventListener('click', (event) => {
+  if (!event.target.closest('.muscle-name')) {
+    closeAllPopups();
+  }
+});
+
+window.addEventListener('resize', () => {
+  if (openPopupCell) {
+    const popup = document.querySelector('.name-popup.open');
+    if (popup) positionPopup(popup, openPopupCell);
+  }
+});
+
+window.addEventListener('scroll', () => {
+  if (openPopupCell) {
+    const popup = document.querySelector('.name-popup.open');
+    if (popup) positionPopup(popup, openPopupCell);
+  }
+}, true);
+
+// edit toggle
+document.querySelectorAll('.edit-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const section = btn.closest('.sec');
+    const cells = section.querySelectorAll('td');
+    const memos = section.querySelectorAll('.memo-box');
+    const editing = btn.dataset.editing === 'true';
+
+    cells.forEach(td=>{
+      td.setAttribute('contenteditable', editing ? 'false' : 'true');
+    });
+    memos.forEach(m=>{
+      m.setAttribute('contenteditable', editing ? 'false' : 'true');
+    });
+
+    btn.dataset.editing = editing ? 'false' : 'true';
+    btn.textContent = editing ? '편집' : '완료';
+  });
+});
+
+// ===== 파일로 저장 =====
+let currentFileHandle = null;
+
+function getCurrentHtml(){
+  return '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+}
+
+async function writeToHandle(fileHandle){
+  const writable = await fileHandle.createWritable();
+  await writable.write(getCurrentHtml());
+  await writable.close();
+}
+
+async function saveAsNewFile(){
+  if ('showSaveFilePicker' in window) {
+    const fileHandle = await window.showSaveFilePicker({
+      suggestedName: 'muscle_lecture_saved.html',
+      types: [{
+        description: 'HTML Files',
+        accept: {'text/html': ['.html']}
+      }]
+    });
+    currentFileHandle = fileHandle;
+    await writeToHandle(fileHandle);
+    return true;
+  } else {
+    const blob = new Blob([getCurrentHtml()], {type: 'text/html'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'muscle_lecture_saved.html';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(a.href);
+    return false;
+  }
+}
+
+async function saveCurrentFile(){
+  try{
+    if (currentFileHandle) {
+      await writeToHandle(currentFileHandle);
+      alert('저장되었습니다.');
+      return;
+    }
+    const saved = await saveAsNewFile();
+    if (saved) {
+      alert('저장되었습니다.');
+    }
+  } catch (e) {
+    console.error(e);
+    alert('저장이 취소되었거나 지원되지 않는 환경입니다.');
+  }
+}
+
+document.getElementById('saveFileBtn').addEventListener('click', async function(){
+  await saveCurrentFile();
+});
+
+document.getElementById('saveAsFileBtn').addEventListener('click', async function(){
+  try{
+    const saved = await saveAsNewFile();
+    if (saved) {
+      alert('다른 이름으로 저장되었습니다.');
+    }
+  } catch (e) {
+    console.error(e);
+    alert('저장이 취소되었거나 지원되지 않는 환경입니다.');
+  }
+});
+</script>
+
+
+</body></html>
